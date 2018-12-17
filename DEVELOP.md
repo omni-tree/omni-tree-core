@@ -13,7 +13,7 @@ mutable. This allows a mutable instance to be created and modified, but returned
 immutable instance by using the interface as the return type.
 
 We use the above immutable-interface/mutable-implementation approach with Swift in
-OmniTree. [Swift does not yet support covariance in protocol implementations] [1], so the
+OmniTree. [Swift does not yet support covariance in protocol implementations][1], so the
 implementation of this approach is not as clean as it could be.
 
 [1]: https://bugs.swift.org/browse/SR-522
