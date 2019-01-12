@@ -6,6 +6,28 @@ public protocol ElementSchema {
   var name: String { get }
 }
 
+// MARK: - User-Defined Types -
+
+/// Schema for user-defined primitive aliases.
+/// Primitive aliases allow constrained primitive types to be reused without
+/// having to repeat the constratins at every field that needs those
+/// constraints.
+public protocol AliasSchema: ElementSchema {
+  var primitive: PrimitiveSchema { get }
+}
+
+/// Schema for user-defined enumerations.
+public protocol EnumerationSchema: ElementSchema {
+  var values: [String] { get }
+}
+
+/// Schema for user-defined entities.
+public protocol EntitySchema: ElementSchema {
+  var fields: [FieldSchema] { get }
+}
+
+// MARK: - Fields -
+
 /// Schema for fields in an entity.
 /// There are subtypes for the schema of different types of fields: primitive
 /// fields, alias fields, enum fields, and entity fields.
@@ -31,23 +53,7 @@ public protocol EntityFieldSchema: FieldSchema {
   var entity: EntitySchema { get }
 }
 
-/// Schema for user-defined primitive aliases.
-/// Primitive aliases allow constrained primitive types to be reused without
-/// having to repeat the constratins at every field that needs those
-/// constraints.
-public protocol AliasSchema: ElementSchema {
-  var primitive: PrimitiveSchema { get }
-}
-
-/// Schema for user-defined enumerations.
-public protocol EnumerationSchema: ElementSchema {
-  var values: [String] { get }
-}
-
-/// Schema for user-defined entities.
-public protocol EntitySchema: ElementSchema {
-  var fields: [FieldSchema] { get }
-}
+// MARK: - Predefined Primitives -
 
 /// Schema for primitives.
 /// There are subclasses for each type of primitive.
@@ -92,6 +98,8 @@ public class BlobSchema: PrimitiveSchema {}
 // if it does not need any special treatment in the frameworks/libraries.
 /// Schema for timestamp primitive.
 public class TimestampSchema: PrimitiveSchema {}
+
+// MARK: - Constraints -
 
 /// Constraints on the cardinality of a field.
 public class Multiplicity {
