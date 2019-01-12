@@ -6,11 +6,10 @@ OmniTree requires the ability to create a mutable instance, modify it, but retur
 immutable instance. In C++, it is possible to do this by using `const` in the return type. There
 is no such mechanism in Swift.
 
-In object-oriented languages that don't support `const` like C++, one approach is to define
-interfaces with getters only, making instances of that interface immutable. The implementation
-of the interface is made to contains setters as well, making instances of the implementation
-mutable. This allows a mutable instance to be created and modified, but returned as an
-immutable instance by using the interface as the return type.
+Another approach is to define an interface with getters only, so instances of that interface will
+be immutable. The implementation of the interface defines setters as well, so instances of the
+implementation will be mutable. This allows a mutable instance to be created and modified,
+but returned as an immutable instance by using the interface as the return type.
 
 We use the above immutable-interface/mutable-implementation approach with Swift in
 OmniTree. [Swift does not yet support covariance in protocol implementations][1], so the
