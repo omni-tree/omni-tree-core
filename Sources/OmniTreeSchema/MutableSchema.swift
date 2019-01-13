@@ -1,3 +1,5 @@
+// Copyright 2019 The OmniTree Authors.
+
 // Mutable classes for elements of the OmniTree schema.
 
 /*

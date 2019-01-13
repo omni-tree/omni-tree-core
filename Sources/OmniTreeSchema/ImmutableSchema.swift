@@ -1,3 +1,5 @@
+// Copyright 2019 The OmniTree Authors.
+
 // Immutable protocols and classes for elements of the OmniTree schema.
 
 /// This is the base class for all schema elements. It contains fields that
