@@ -1,3 +1,5 @@
+// Copyright 2018 The OmniTree Authors.
+
 import XCTest
 @testable import OmniTreeSchema
 
