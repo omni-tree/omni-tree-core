@@ -8,6 +8,13 @@ public protocol ElementSchema {
 
 // MARK: - User-Defined Types -
 
+/// Schema for a user-defined package.
+public protocol Package: ElementSchema {
+  var aliases: [AliasSchema] { get }
+  var enumerations: [EnumerationSchema] { get }
+  var entities: [EntitySchema] { get }
+}
+
 /// Schema for user-defined primitive aliases.
 /// Primitive aliases allow constrained primitive types to be reused without
 /// having to repeat the constratins at every field that needs those
@@ -38,6 +45,9 @@ public protocol PrimitiveFieldSchema: FieldSchema {
   var primitive: PrimitiveSchema { get }
 }
 
+// TODO: ability to refer to aliases, enumerations, entities defined in a
+// different pacakges.
+
 /// Schema for fields whose types are user-defined primitive aliases.
 public protocol AliasFieldSchema: FieldSchema {
   var alias: AliasSchema { get }
@@ -51,6 +61,7 @@ public protocol EnumerationFieldSchema: FieldSchema {
 /// Schema for fields whose types are user-defined entities.
 public protocol EntityFieldSchema: FieldSchema {
   var entity: EntitySchema { get }
+  // TODO: composition vs reference
 }
 
 // MARK: - Predefined Primitives -
@@ -94,8 +105,12 @@ public class UuidSchema: PrimitiveSchema {}
 /// Schema for blob primtive that can store binary data.
 public class BlobSchema: PrimitiveSchema {}
 
-// TODO: should timestamps be user-defined primitives? It can be user-defined
-// if it does not need any special treatment in the frameworks/libraries.
+// TODO: should the Timestamp type be a user-defined primitive alias?
+// If the system supports time-series, then a predefined Timestamp type might
+// be required. The system will definitely deal with networking, so should IP
+// Address and MAC Address be predefined primitives?
+// Can't the system use aliases defined in a base package?
+
 /// Schema for timestamp primitive.
 public class TimestampSchema: PrimitiveSchema {}
 
