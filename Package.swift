@@ -1,5 +1,7 @@
 // swift-tools-version:4.2
 
+// Copyright 2018 The OmniTree Authors.
+
 import PackageDescription
 
 let package = Package(
