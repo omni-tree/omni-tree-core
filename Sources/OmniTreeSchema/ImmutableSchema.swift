@@ -107,15 +107,6 @@ public class UuidSchema: PrimitiveSchema {}
 /// Schema for blob primtive that can store binary data.
 public class BlobSchema: PrimitiveSchema {}
 
-// TODO: should the Timestamp type be a user-defined primitive alias?
-// If the system supports time-series, then a predefined Timestamp type might
-// be required. The system will definitely deal with networking, so should IP
-// Address and MAC Address be predefined primitives?
-// Can't the system use aliases defined in a base package?
-
-/// Schema for timestamp primitive.
-public class TimestampSchema: PrimitiveSchema {}
-
 // MARK: - Constraints -
 
 /// Constraints on the cardinality of a field.
