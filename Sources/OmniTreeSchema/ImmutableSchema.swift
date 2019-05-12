@@ -4,7 +4,7 @@
 
 /// This is the base protocol for all schema elements. It contains fields that
 /// are common to all schema elements.
-public protocol ElementSchema: Codable {
+public protocol ElementSchema {
   var name: String { get }
 }
 
@@ -70,7 +70,7 @@ public protocol EntityFieldSchema: FieldSchema {
 
 /// Schema for primitives.
 /// There are sub-protocols for each type of primitive.
-public protocol PrimitiveSchema: Codable {}
+public protocol PrimitiveSchema {}
 
 /// Schema for boolean primitive.
 public protocol BooleanSchema: PrimitiveSchema {}
@@ -104,7 +104,7 @@ public protocol BlobSchema: PrimitiveSchema {}
 // MARK: - Constraints -
 
 /// Constraints on the cardinality of a field.
-public protocol Multiplicity: Codable {
+public protocol Multiplicity {
   var min: UInt { get }
   var max: UInt { get }
 }
@@ -124,7 +124,7 @@ public protocol NumericBound {
 }
 
 /// Constraints for string fields.
-public protocol StringConstraints: Codable {
+public protocol StringConstraints {
   var minLength: Int? { get }
   var maxLength: Int? { get }
   var regexPattern: String? { get }
