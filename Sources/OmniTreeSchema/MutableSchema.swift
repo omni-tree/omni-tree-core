@@ -14,19 +14,15 @@ public class MutableElementSchema: ElementSchema {
 
 public class MutablePackage: MutableElementSchema, Package {
   public var aliases: [AliasSchema] {
-    get {
-      return mutableAliases
-    }
+    return mutableAliases
   }
+
   public var enumerations: [EnumerationSchema] {
-    get {
-      return mutableEnumerations
-    }
+    return mutableEnumerations
   }
+
   public var entities: [EntitySchema] {
-    get {
-      return mutableEntities
-    }
+    return mutableEntities
   }
 
   public var mutableAliases: [MutableAliasSchema]
@@ -34,24 +30,22 @@ public class MutablePackage: MutableElementSchema, Package {
   public var mutableEntities: [MutableEntitySchema]
 
   init(name: String, aliases: [MutableAliasSchema], enumerations: [MutableEnumerationSchema], entities: [MutableEntitySchema]) {
-    self.mutableAliases = aliases
-    self.mutableEnumerations = enumerations
-    self.mutableEntities = entities
+    mutableAliases = aliases
+    mutableEnumerations = enumerations
+    mutableEntities = entities
     super.init(name: name)
   }
 }
 
 public class MutableAliasSchema: MutableElementSchema, AliasSchema {
   public var primitive: PrimitiveSchema {
-    get {
-      return mutablePrimitive
-    }
+    return mutablePrimitive
   }
 
   public var mutablePrimitive: MutablePrimitiveSchema
 
   init(name: String, primitive: MutablePrimitiveSchema) {
-    self.mutablePrimitive = primitive
+    mutablePrimitive = primitive
     super.init(name: name)
   }
 }
@@ -67,80 +61,69 @@ public class MutableEnumerationSchema: MutableElementSchema, EnumerationSchema {
 
 public class MutableEntitySchema: MutableElementSchema, EntitySchema {
   public var fields: [FieldSchema] {
-    get {
-      return mutableFields
-    }
+    return mutableFields
   }
 
   public var mutableFields: [MutableFieldSchema]
 
   init(name: String, fields: [MutableFieldSchema]) {
-    self.mutableFields = fields
+    mutableFields = fields
     super.init(name: name)
   }
 }
 
 // MARK: - Fields -
 
-public class MutableFieldSchema: MutableElementSchema, FieldSchema {
-}
+public class MutableFieldSchema: MutableElementSchema, FieldSchema {}
 
 public class MutablePrimitiveFieldSchema: MutableFieldSchema, PrimitiveFieldSchema {
   public var primitive: PrimitiveSchema {
-    get {
-      return mutablePrimitive
-    }
+    return mutablePrimitive
   }
 
   public var mutablePrimitive: MutablePrimitiveSchema
 
   init(name: String, primitive: MutablePrimitiveSchema) {
-    self.mutablePrimitive = primitive
+    mutablePrimitive = primitive
     super.init(name: name)
   }
 }
 
 public class MutableAliasFieldSchema: MutableFieldSchema, AliasFieldSchema {
   public var alias: AliasSchema {
-    get {
-      return mutableAlias
-    }
+    return mutableAlias
   }
 
   public var mutableAlias: MutableAliasSchema
 
   init(name: String, alias: MutableAliasSchema) {
-    self.mutableAlias = alias
+    mutableAlias = alias
     super.init(name: name)
   }
 }
 
 public class MutableEnumerationFieldSchema: MutableFieldSchema, EnumerationFieldSchema {
   public var enumeration: EnumerationSchema {
-    get {
-      return mutableEnumeration
-    }
+    return mutableEnumeration
   }
 
   public var mutableEnumeration: MutableEnumerationSchema
 
   init(name: String, enumeration: MutableEnumerationSchema) {
-    self.mutableEnumeration = enumeration
+    mutableEnumeration = enumeration
     super.init(name: name)
   }
 }
 
 public class MutableEntityFieldSchema: MutableFieldSchema, EntityFieldSchema {
   public var entity: EntitySchema {
-    get {
-      return mutableEntity
-    }
+    return mutableEntity
   }
 
   public var mutableEntity: MutableEntitySchema
 
   init(name: String, entity: MutableEntitySchema) {
-    self.mutableEntity = entity
+    mutableEntity = entity
     super.init(name: name)
   }
 }
@@ -162,29 +145,23 @@ public class MutableNumericSchema<T: Numeric>: MutablePrimitiveSchema, NumericSc
 
 public class MutableStringSchema: MutablePrimitiveSchema, StringSchema {
   public var constraints: StringConstraints {
-    get {
-      return mutableConstraints
-    }
+    return mutableConstraints
   }
 
   public var mutableConstraints: MutableStringConstraints
 
   init(constraints: MutableStringConstraints) {
-    self.mutableConstraints = constraints
+    mutableConstraints = constraints
   }
 }
 
-public class MutablePassword1WaySchema: MutableStringSchema, Password1WaySchema {
-}
+public class MutablePassword1WaySchema: MutableStringSchema, Password1WaySchema {}
 
-public class MutablePassword2WaySchema: MutableStringSchema, Password2WaySchema {
-}
+public class MutablePassword2WaySchema: MutableStringSchema, Password2WaySchema {}
 
-public class MutableUuidSchema: MutablePrimitiveSchema, UuidSchema {
-}
+public class MutableUuidSchema: MutablePrimitiveSchema, UuidSchema {}
 
-public class MutableBlobSchema: MutablePrimitiveSchema, BlobSchema {
-}
+public class MutableBlobSchema: MutablePrimitiveSchema, BlobSchema {}
 
 // MARK: - Constraints -
 
@@ -194,8 +171,8 @@ public class MutableMultiplicity: Multiplicity {
 }
 
 public class MutableNumericConstraints<T: Numeric>: NumericConstraints {
-  public var minValue: MutableNumericBound<T>? = nil
-  public var maxValue: MutableNumericBound<T>? = nil
+  public var minValue: MutableNumericBound<T>?
+  public var maxValue: MutableNumericBound<T>?
 }
 
 public class MutableNumericBound<T: Numeric>: NumericBound {
@@ -209,7 +186,7 @@ public class MutableNumericBound<T: Numeric>: NumericBound {
 }
 
 public class MutableStringConstraints: StringConstraints {
-  public var minLength: Int? = nil
-  public var maxLength: Int? = nil
-  public var regexPattern: String? = nil
+  public var minLength: Int?
+  public var maxLength: Int?
+  public var regexPattern: String?
 }

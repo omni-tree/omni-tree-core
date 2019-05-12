@@ -1,7 +1,7 @@
 import XCTest
 
-import OmniTreeSchemaTests
 import OmniTreeDataTests
+import OmniTreeSchemaTests
 
 var tests = [XCTestCaseEntry]()
 tests += OmniTreeSchemaTests.allTests()

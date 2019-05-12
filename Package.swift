@@ -9,26 +9,32 @@ let package = Package(
   products: [
     .library(
       name: "OmniTreeSchema",
-      targets: ["OmniTreeSchema"]),
+      targets: ["OmniTreeSchema"]
+    ),
     .library(
       name: "OmniTreeData",
-      targets: ["OmniTreeData"]),
-    ],
+      targets: ["OmniTreeData"]
+    ),
+  ],
   dependencies: [
     // .package(url: /* package url */, from: "1.0.0"),
   ],
   targets: [
     .target(
       name: "OmniTreeSchema",
-      dependencies: []),
+      dependencies: []
+    ),
     .testTarget(
       name: "OmniTreeSchemaTests",
-      dependencies: ["OmniTreeSchema"]),
+      dependencies: ["OmniTreeSchema"]
+    ),
     .target(
       name: "OmniTreeData",
-      dependencies: ["OmniTreeSchema"]),
+      dependencies: ["OmniTreeSchema"]
+    ),
     .testTarget(
       name: "OmniTreeDataTests",
-      dependencies: ["OmniTreeData"]),
-    ]
+      dependencies: ["OmniTreeData"]
+    ),
+  ]
 )

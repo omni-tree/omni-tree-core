@@ -13,5 +13,5 @@ final class OmniTreeDataTests: XCTestCase {
 
   static var allTests = [
     ("testExample", testExample),
-    ]
+  ]
 }

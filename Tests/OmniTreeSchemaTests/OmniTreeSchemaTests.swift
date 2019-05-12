@@ -10,8 +10,8 @@ final class OmniTreeSchemaTests: XCTestCase {
     // correct results.
     XCTAssertEqual(OmniTreeSchema().text, "Hello, World!")
   }
-  
+
   static var allTests = [
     ("testExample", testExample),
-    ]
+  ]
 }
