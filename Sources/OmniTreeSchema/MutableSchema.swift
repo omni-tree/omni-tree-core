@@ -3,11 +3,7 @@
 // Mutable classes for elements of the OmniTree schema.
 
 public class MutableElementSchema: ElementSchema {
-  public var name: String
-
-  init(name: String) {
-    self.name = name
-  }
+  public var name: String = ""
 }
 
 // MARK: - User-Defined Types -
@@ -25,16 +21,9 @@ public class MutablePackage: MutableElementSchema, Package {
     return mutableEntities
   }
 
-  public var mutableAliases: [MutableAliasSchema]
-  public var mutableEnumerations: [MutableEnumerationSchema]
-  public var mutableEntities: [MutableEntitySchema]
-
-  init(name: String, aliases: [MutableAliasSchema], enumerations: [MutableEnumerationSchema], entities: [MutableEntitySchema]) {
-    mutableAliases = aliases
-    mutableEnumerations = enumerations
-    mutableEntities = entities
-    super.init(name: name)
-  }
+  public var mutableAliases: [MutableAliasSchema] = []
+  public var mutableEnumerations: [MutableEnumerationSchema] = []
+  public var mutableEntities: [MutableEntitySchema] = []
 }
 
 public class MutableAliasSchema: MutableElementSchema, AliasSchema {
@@ -42,21 +31,11 @@ public class MutableAliasSchema: MutableElementSchema, AliasSchema {
     return mutablePrimitive
   }
 
-  public var mutablePrimitive: MutablePrimitiveSchema
-
-  init(name: String, primitive: MutablePrimitiveSchema) {
-    mutablePrimitive = primitive
-    super.init(name: name)
-  }
+  public var mutablePrimitive: MutablePrimitiveSchema = MutablePrimitiveSchema()
 }
 
 public class MutableEnumerationSchema: MutableElementSchema, EnumerationSchema {
-  public var values: [String]
-
-  init(name: String, values: [String]) {
-    self.values = values
-    super.init(name: name)
-  }
+  public var values: [String] = []
 }
 
 public class MutableEntitySchema: MutableElementSchema, EntitySchema {
@@ -64,12 +43,7 @@ public class MutableEntitySchema: MutableElementSchema, EntitySchema {
     return mutableFields
   }
 
-  public var mutableFields: [MutableFieldSchema]
-
-  init(name: String, fields: [MutableFieldSchema]) {
-    mutableFields = fields
-    super.init(name: name)
-  }
+  public var mutableFields: [MutableFieldSchema] = []
 }
 
 // MARK: - Fields -
@@ -81,12 +55,7 @@ public class MutablePrimitiveFieldSchema: MutableFieldSchema, PrimitiveFieldSche
     return mutablePrimitive
   }
 
-  public var mutablePrimitive: MutablePrimitiveSchema
-
-  init(name: String, primitive: MutablePrimitiveSchema) {
-    mutablePrimitive = primitive
-    super.init(name: name)
-  }
+  public var mutablePrimitive: MutablePrimitiveSchema = MutablePrimitiveSchema()
 }
 
 public class MutableAliasFieldSchema: MutableFieldSchema, AliasFieldSchema {
@@ -94,12 +63,7 @@ public class MutableAliasFieldSchema: MutableFieldSchema, AliasFieldSchema {
     return mutableAlias
   }
 
-  public var mutableAlias: MutableAliasSchema
-
-  init(name: String, alias: MutableAliasSchema) {
-    mutableAlias = alias
-    super.init(name: name)
-  }
+  public var mutableAlias: MutableAliasSchema = MutableAliasSchema()
 }
 
 public class MutableEnumerationFieldSchema: MutableFieldSchema, EnumerationFieldSchema {
@@ -107,12 +71,7 @@ public class MutableEnumerationFieldSchema: MutableFieldSchema, EnumerationField
     return mutableEnumeration
   }
 
-  public var mutableEnumeration: MutableEnumerationSchema
-
-  init(name: String, enumeration: MutableEnumerationSchema) {
-    mutableEnumeration = enumeration
-    super.init(name: name)
-  }
+  public var mutableEnumeration: MutableEnumerationSchema = MutableEnumerationSchema()
 }
 
 public class MutableEntityFieldSchema: MutableFieldSchema, EntityFieldSchema {
@@ -120,12 +79,7 @@ public class MutableEntityFieldSchema: MutableFieldSchema, EntityFieldSchema {
     return mutableEntity
   }
 
-  public var mutableEntity: MutableEntitySchema
-
-  init(name: String, entity: MutableEntitySchema) {
-    mutableEntity = entity
-    super.init(name: name)
-  }
+  public var mutableEntity: MutableEntitySchema = MutableEntitySchema()
 }
 
 // MARK: - Predefined Primitives -
@@ -136,11 +90,7 @@ public class MutableBooleanSchema: MutablePrimitiveSchema, BooleanSchema {}
 
 public class MutableNumericSchema<T: Numeric>: MutablePrimitiveSchema, NumericSchema {
   // TODO: does MutableNumericConstraints<T> leak when this is accessed as NumericSchema?
-  public var constraints: MutableNumericConstraints<T>
-
-  init(constraints: MutableNumericConstraints<T>) {
-    self.constraints = constraints
-  }
+  public var constraints: MutableNumericConstraints<T> = MutableNumericConstraints<T>()
 }
 
 public class MutableStringSchema: MutablePrimitiveSchema, StringSchema {
@@ -148,11 +98,7 @@ public class MutableStringSchema: MutablePrimitiveSchema, StringSchema {
     return mutableConstraints
   }
 
-  public var mutableConstraints: MutableStringConstraints
-
-  init(constraints: MutableStringConstraints) {
-    mutableConstraints = constraints
-  }
+  public var mutableConstraints: MutableStringConstraints = MutableStringConstraints()
 }
 
 public class MutablePassword1WaySchema: MutableStringSchema, Password1WaySchema {}
@@ -176,13 +122,8 @@ public class MutableNumericConstraints<T: Numeric>: NumericConstraints {
 }
 
 public class MutableNumericBound<T: Numeric>: NumericBound {
-  public var value: T
-  public var inclusive: Bool
-
-  init(value: T, inclusive: Bool = false) {
-    self.value = value
-    self.inclusive = inclusive
-  }
+  public var value: T = 0
+  public var inclusive: Bool = false
 }
 
 public class MutableStringConstraints: StringConstraints {
