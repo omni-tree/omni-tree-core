@@ -6,12 +6,17 @@
 /// are common to all schema elements.
 public protocol ElementSchema {
   var name: String { get }
+
+  /// Accepts a visitor and traverses the schema with it (Visitor Pattern).
+  /// -Returns: `true` to proceed with schema traversal, `false` to stop
+  ///     schema traversal.
+  func accept(visitor: SchemaVisitor) -> Bool
 }
 
 // MARK: - User-Defined Types -
 
 /// Schema for a user-defined package.
-public protocol Package: ElementSchema {
+public protocol PackageSchema: ElementSchema {
   var aliases: [AliasSchema] { get }
   var enumerations: [EnumerationSchema] { get }
   var entities: [EntitySchema] { get }
@@ -70,7 +75,12 @@ public protocol EntityFieldSchema: FieldSchema {
 
 /// Schema for primitives.
 /// There are sub-protocols for each type of primitive.
-public protocol PrimitiveSchema {}
+public protocol PrimitiveSchema {
+  /// Accepts a visitor and traverses the schema with it (Visitor Pattern).
+  /// -Returns: `true` to proceed with schema traversal, `false` to stop
+  ///     schema traversal.
+  func accept(visitor: SchemaVisitor) -> Bool
+}
 
 /// Schema for boolean primitive.
 public protocol BooleanSchema: PrimitiveSchema {}

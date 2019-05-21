@@ -8,7 +8,7 @@ public class MutableElementSchema: ElementSchema {
 
 // MARK: - User-Defined Types -
 
-public class MutablePackage: MutableElementSchema, Package {
+public class MutablePackageSchema: MutableElementSchema, PackageSchema {
   public var aliases: [AliasSchema] {
     return mutableAliases
   }
