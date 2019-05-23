@@ -1,6 +1,7 @@
 // Copyright 2019 The OmniTree Authors.
 
 /// Schema visitor (Visitor Pattern).
+///
 /// `visit()` methods should return `true` to proceed with schema traversal
 /// and `false` to stop schema traversal.
 public protocol SchemaVisitor {
@@ -35,17 +36,31 @@ extension ElementSchema {
 extension PackageSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the package.
+    (visitor as? BracketedVisitor)?.objectStart(name: "package")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(package: self) { return false }
 
     // Traverse the children.
-    for alias in aliases {
-      if !alias.accept(visitor: visitor) { return false }
+    if !aliases.isEmpty {
+      (visitor as? BracketedVisitor)?.listStart(name: "aliases")
+      defer { (visitor as? BracketedVisitor)?.listEnd() }
+      for alias in aliases {
+        if !alias.accept(visitor: visitor) { return false }
+      }
     }
-    for enumeration in enumerations {
-      if !enumeration.accept(visitor: visitor) { return false }
+    if !enumerations.isEmpty {
+      (visitor as? BracketedVisitor)?.listStart(name: "enumerations")
+      defer { (visitor as? BracketedVisitor)?.listEnd() }
+      for enumeration in enumerations {
+        if !enumeration.accept(visitor: visitor) { return false }
+      }
     }
-    for entity in entities {
-      if !entity.accept(visitor: visitor) { return false }
+    if !entities.isEmpty {
+      (visitor as? BracketedVisitor)?.listStart(name: "entities")
+      defer { (visitor as? BracketedVisitor)?.listEnd() }
+      for entity in entities {
+        if !entity.accept(visitor: visitor) { return false }
+      }
     }
 
     return true
@@ -55,6 +70,8 @@ extension PackageSchema {
 extension AliasSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the alias.
+    (visitor as? BracketedVisitor)?.objectStart(name: "alias")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(alias: self) { return false }
 
     // Traverse the children.
@@ -67,6 +84,8 @@ extension AliasSchema {
 extension EnumerationSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the enumeration
+    (visitor as? BracketedVisitor)?.objectStart(name: "enumeration")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     return visitor.visit(enumeration: self)
   }
 }
@@ -74,11 +93,17 @@ extension EnumerationSchema {
 extension EntitySchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the entity.
+    (visitor as? BracketedVisitor)?.objectStart(name: "entity")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(entity: self) { return false }
 
     // Traverse the children.
-    for field in fields {
-      if !field.accept(visitor: visitor) { return false }
+    if !fields.isEmpty {
+      (visitor as? BracketedVisitor)?.listStart(name: "fields")
+      defer { (visitor as? BracketedVisitor)?.listEnd() }
+      for field in fields {
+        if !field.accept(visitor: visitor) { return false }
+      }
     }
 
     return true
@@ -90,6 +115,8 @@ extension EntitySchema {
 extension PrimitiveFieldSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the primitive field.
+    (visitor as? BracketedVisitor)?.objectStart(name: "primitive_field")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(primitiveField: self) { return false }
 
     // Traverse the children.
@@ -102,6 +129,8 @@ extension PrimitiveFieldSchema {
 extension AliasFieldSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the alias field.
+    (visitor as? BracketedVisitor)?.objectStart(name: "alias_field")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(aliasField: self) { return false }
 
     // Traverse the children.
@@ -114,6 +143,8 @@ extension AliasFieldSchema {
 extension EnumerationFieldSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the enumeration field.
+    (visitor as? BracketedVisitor)?.objectStart(name: "enumeration_field")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(enumerationField: self) { return false }
 
     // Traverse the children.
@@ -126,6 +157,8 @@ extension EnumerationFieldSchema {
 extension EntityFieldSchema {
   public func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the entity field.
+    (visitor as? BracketedVisitor)?.objectStart(name: "entity_field")
+    defer { (visitor as? BracketedVisitor)?.objectEnd() }
     if !visitor.visit(entityField: self) { return false }
 
     // Traverse the children.
