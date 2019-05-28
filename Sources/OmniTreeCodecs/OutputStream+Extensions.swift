@@ -1,0 +1,21 @@
+// Copyright 2019 The OmniTree Authors.
+
+import Foundation
+
+extension OutputStream {
+  public func write(_ string: String) {
+    if string == "" { return }
+    if let data = string.data(using: .utf8) {
+      _ = data.withUnsafeBytes {
+        write($0, maxLength: data.count)
+      }
+      // TODO: handle the case where the bytes written (return value above) is
+      // less than data.count.
+    }
+  }
+
+  public func getDataWrittenToMemory() -> Data? {
+    let nsData = property(forKey: .dataWrittenToMemoryStreamKey) as! NSData?
+    return nsData.map { Data(referencing: $0) }
+  }
+}
