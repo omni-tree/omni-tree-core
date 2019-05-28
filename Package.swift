@@ -36,6 +36,10 @@ let package = Package(
       name: "OmniTreeCodecs",
       dependencies: ["OmniTreeSchema"]
     ),
+    .testTarget(
+      name: "OmniTreeCodecsTests",
+      dependencies: ["OmniTreeCodecs"]
+    ),
     .target(
       name: "OmniTreeData",
       dependencies: ["OmniTreeSchema"]
