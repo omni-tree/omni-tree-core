@@ -4,6 +4,8 @@
 
 public class MutableElementSchema: ElementSchema {
   public var name: String = ""
+
+  public init() {}
 }
 
 // MARK: - User-Defined Types -

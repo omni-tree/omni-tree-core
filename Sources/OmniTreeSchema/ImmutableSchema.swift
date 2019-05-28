@@ -24,6 +24,8 @@ public protocol PackageSchema: ElementSchema {
   var aliases: [AliasSchema] { get }
   var enumerations: [EnumerationSchema] { get }
   var entities: [EntitySchema] { get }
+
+  func accept(visitor: SchemaVisitor) -> Bool
 }
 
 /// Schema for user-defined primitive aliases.
