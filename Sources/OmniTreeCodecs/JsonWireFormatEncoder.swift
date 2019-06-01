@@ -22,6 +22,7 @@ public class JsonWireFormatEncoder: WireFormatEncoder {
     prettyPrint.unindent()
     output.write(prettyPrint.currentIndent)
     output.write(brace)
+    output.write(",")
     output.write(prettyPrint.endOfLine)
   }
 
@@ -45,7 +46,7 @@ public class JsonWireFormatEncoder: WireFormatEncoder {
 
   public func encodeStringField(name: String, value: String) {
     output.write(prettyPrint.currentIndent)
-    output.write("\"\(name)\": \"\(value)\"")
+    output.write("\"\(name)\": \"\(value)\",")
     output.write(prettyPrint.endOfLine)
   }
 }

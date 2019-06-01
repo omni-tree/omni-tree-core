@@ -39,7 +39,7 @@ public class MutablePackageSchema: MutableElementSchema, PackageSchema {
     super.init()
   }
 
-  public init(name: String, aliases: [MutableAliasSchema], enumerations: [MutableEnumerationSchema], entities: [MutableEntitySchema]) {
+  public init(name: String, aliases: [MutableAliasSchema] = [], enumerations: [MutableEnumerationSchema] = [], entities: [MutableEntitySchema] = []) {
     super.init(name: name)
     mutableAliases = aliases
     mutableEnumerations = enumerations

@@ -2,7 +2,22 @@
 
 let goldenJsonPrettyPrintedSchema = """
 "package": {
-  "name": "test_package"
-}
+  "name": "test_package",
+  "entities": [
+    "entity": {
+      "name": "entity1",
+      "fields": [
+        "primitive_field": {
+        },
+      ],
+    },
+    "entity": {
+      "name": "entity2",
+    },
+    "entity": {
+      "name": "entity3",
+    },
+  ],
+},
 
 """

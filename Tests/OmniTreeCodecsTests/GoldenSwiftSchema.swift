@@ -3,7 +3,20 @@
 import OmniTreeSchema
 
 func getGoldenSwiftSchema() -> PackageSchema {
-  let package = MutablePackageSchema()
-  package.name = "test_package"
-  return package
+  return MutablePackageSchema(
+    name: "test_package",
+    entities: [
+      MutableEntitySchema(
+        name: "entity1",
+        fields: [
+          MutablePrimitiveFieldSchema(
+            name: "primitive_field",
+            primitive: MutableStringSchema()
+          ),
+        ]
+      ),
+      MutableEntitySchema(name: "entity2", fields: []),
+      MutableEntitySchema(name: "entity3", fields: []),
+    ]
+  )
 }
