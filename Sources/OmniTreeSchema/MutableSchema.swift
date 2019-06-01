@@ -5,7 +5,11 @@
 public class MutableElementSchema: ElementSchema {
   public var name: String = ""
 
-  public init() {}
+  fileprivate init() {}
+
+  fileprivate init(name: String) {
+    self.name = name
+  }
 
   public func accept(visitor _: SchemaVisitor) -> Bool {
     fatalError("Abstract method called")
@@ -30,6 +34,17 @@ public class MutablePackageSchema: MutableElementSchema, PackageSchema {
   public var mutableAliases: [MutableAliasSchema] = []
   public var mutableEnumerations: [MutableEnumerationSchema] = []
   public var mutableEntities: [MutableEntitySchema] = []
+
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, aliases: [MutableAliasSchema], enumerations: [MutableEnumerationSchema], entities: [MutableEntitySchema]) {
+    super.init(name: name)
+    mutableAliases = aliases
+    mutableEnumerations = enumerations
+    mutableEntities = entities
+  }
 
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the package.
@@ -71,6 +86,15 @@ public class MutableAliasSchema: MutableElementSchema, AliasSchema {
 
   public var mutablePrimitive: MutablePrimitiveSchema = MutablePrimitiveSchema()
 
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, primitive: MutablePrimitiveSchema) {
+    super.init(name: name)
+    mutablePrimitive = primitive
+  }
+
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the alias.
     (visitor as? BracketedVisitor)?.objectStart(name: "alias")
@@ -87,6 +111,15 @@ public class MutableAliasSchema: MutableElementSchema, AliasSchema {
 public class MutableEnumerationSchema: MutableElementSchema, EnumerationSchema {
   public var values: [String] = []
 
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, values: [String]) {
+    super.init(name: name)
+    self.values = values
+  }
+
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the enumeration
     (visitor as? BracketedVisitor)?.objectStart(name: "enumeration")
@@ -101,6 +134,15 @@ public class MutableEntitySchema: MutableElementSchema, EntitySchema {
   }
 
   public var mutableFields: [MutableFieldSchema] = []
+
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, fields: [MutableFieldSchema]) {
+    super.init(name: name)
+    mutableFields = fields
+  }
 
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the entity.
@@ -124,8 +166,6 @@ public class MutableEntitySchema: MutableElementSchema, EntitySchema {
 // MARK: - Fields -
 
 public class MutableFieldSchema: MutableElementSchema, FieldSchema {
-  public override init() {}
-
   public override func accept(visitor _: SchemaVisitor) -> Bool {
     fatalError("Abstract method called")
   }
@@ -137,6 +177,15 @@ public class MutablePrimitiveFieldSchema: MutableFieldSchema, PrimitiveFieldSche
   }
 
   public var mutablePrimitive: MutablePrimitiveSchema = MutablePrimitiveSchema()
+
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, primitive: MutablePrimitiveSchema) {
+    super.init(name: name)
+    mutablePrimitive = primitive
+  }
 
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the primitive field.
@@ -158,6 +207,15 @@ public class MutableAliasFieldSchema: MutableFieldSchema, AliasFieldSchema {
 
   public var mutableAlias: MutableAliasSchema = MutableAliasSchema()
 
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, alias: MutableAliasSchema) {
+    super.init(name: name)
+    mutableAlias = alias
+  }
+
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the alias field.
     (visitor as? BracketedVisitor)?.objectStart(name: "alias_field")
@@ -177,6 +235,15 @@ public class MutableEnumerationFieldSchema: MutableFieldSchema, EnumerationField
   }
 
   public var mutableEnumeration: MutableEnumerationSchema = MutableEnumerationSchema()
+
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, enumeration: MutableEnumerationSchema) {
+    super.init(name: name)
+    mutableEnumeration = enumeration
+  }
 
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the enumeration field.
@@ -198,6 +265,15 @@ public class MutableEntityFieldSchema: MutableFieldSchema, EntityFieldSchema {
 
   public var mutableEntity: MutableEntitySchema = MutableEntitySchema()
 
+  public override init() {
+    super.init()
+  }
+
+  public init(name: String, entity: MutableEntitySchema) {
+    super.init(name: name)
+    mutableEntity = entity
+  }
+
   public override func accept(visitor: SchemaVisitor) -> Bool {
     // Visit the entity field.
     (visitor as? BracketedVisitor)?.objectStart(name: "entity_field")
@@ -214,7 +290,7 @@ public class MutableEntityFieldSchema: MutableFieldSchema, EntityFieldSchema {
 // MARK: - Predefined Primitives -
 
 public class MutablePrimitiveSchema: PrimitiveSchema {
-  public init() {}
+  fileprivate init() {}
 
   public func accept(visitor _: SchemaVisitor) -> Bool {
     fatalError("Abstract method called")
@@ -231,6 +307,14 @@ public class MutableNumericSchema<T: Numeric>: MutablePrimitiveSchema, NumericSc
   // TODO: does MutableNumericConstraints<T> leak when this is accessed as NumericSchema?
   public var constraints: MutableNumericConstraints<T> = MutableNumericConstraints<T>()
 
+  public override init() {
+    super.init()
+  }
+
+  public init(constraints: MutableNumericConstraints<T>) {
+    self.constraints = constraints
+  }
+
   public override func accept(visitor: SchemaVisitor) -> Bool {
     return visitor.visit(number: self)
   }
@@ -242,6 +326,14 @@ public class MutableStringSchema: MutablePrimitiveSchema, StringSchema {
   }
 
   public var mutableConstraints: MutableStringConstraints = MutableStringConstraints()
+
+  public override init() {
+    super.init()
+  }
+
+  public init(constraints: MutableStringConstraints) {
+    mutableConstraints = constraints
+  }
 
   public override func accept(visitor: SchemaVisitor) -> Bool {
     return visitor.visit(string: self)
@@ -274,19 +366,41 @@ public class MutableBlobSchema: MutablePrimitiveSchema, BlobSchema {
 
 // MARK: - Constraints -
 
+// TODO: refer to multiplicity in FieldSchema
 public class MutableMultiplicity: Multiplicity {
   public var min: UInt = 1
   public var max: UInt = 1
+
+  public init() {}
+
+  public init(min: UInt, max: UInt) {
+    self.min = min
+    self.max = max
+  }
 }
 
 public class MutableNumericConstraints<T: Numeric>: NumericConstraints {
   public var minValue: MutableNumericBound<T>?
   public var maxValue: MutableNumericBound<T>?
+
+  public init() {}
+
+  public init(minValue: MutableNumericBound<T>? = nil, maxValue: MutableNumericBound<T>? = nil) {
+    self.minValue = minValue
+    self.maxValue = maxValue
+  }
 }
 
 public class MutableNumericBound<T: Numeric>: NumericBound {
   public var value: T = 0
   public var inclusive: Bool = false
+
+  public init() {}
+
+  public init(value: T, inclusive: Bool) {
+    self.value = value
+    self.inclusive = inclusive
+  }
 }
 
 public class MutableStringConstraints: StringConstraints {
@@ -295,4 +409,10 @@ public class MutableStringConstraints: StringConstraints {
   public var regexPattern: String?
 
   public init() {}
+
+  public init(minLength: Int? = nil, maxLength: Int? = nil, regexPattern: String? = nil) {
+    self.minLength = minLength
+    self.maxLength = maxLength
+    self.regexPattern = regexPattern
+  }
 }
