@@ -11,9 +11,12 @@ public class JsonWireFormatEncoder: WireFormatEncoder {
     self.prettyPrint = PrettyPrintHelper(prettyPrint: prettyPrint, indentSizeInSpaces: indentSizeInSpaces)
   }
 
-  private func open(name: String, brace: String) {
+  private func open(name: String?, brace: String) {
     output.write(prettyPrint.currentIndent)
-    output.write("\"\(name)\": \(brace)")
+    if let name = name {
+      output.write("\"\(name)\": ")
+    }
+    output.write(brace)
     output.write(prettyPrint.endOfLine)
     prettyPrint.indent()
   }
@@ -28,7 +31,7 @@ public class JsonWireFormatEncoder: WireFormatEncoder {
 
   // MARK: - WireFormatEncoder Methods -
 
-  public func encodeObjectStart(name: String) {
+  public func encodeObjectStart(name: String?) {
     open(name: name, brace: "{")
   }
 
@@ -36,7 +39,7 @@ public class JsonWireFormatEncoder: WireFormatEncoder {
     close(brace: "}")
   }
 
-  public func encodeListStart(name: String) {
+  public func encodeListStart(name: String?) {
     open(name: name, brace: "[")
   }
 

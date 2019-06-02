@@ -8,11 +8,11 @@ final class JsonWireFormatEncoderTests: XCTestCase {
   func testPrettyPrintEncoder() {
     let outputMemoryStream = OutputStream.toMemory()
     outputMemoryStream.open()
-    let jsonFormatEncoder = JsonWireFormatEncoder(output: outputMemoryStream, prettyPrint: true)
-    let encoder = SchemaEncoder(wireFormatEncoder: jsonFormatEncoder)
+
+    let jsonSchemaEncoder = JSONSchemaEncoder(output: outputMemoryStream, prettyPrint: true)
 
     let schema = getGoldenSwiftSchema()
-    _ = schema.accept(visitor: encoder)
+    _ = jsonSchemaEncoder.encode(schema)
 
     let encodedSchema = outputMemoryStream.getDataWrittenToMemory().flatMap {
       String(data: $0, encoding: String.Encoding.utf8)
