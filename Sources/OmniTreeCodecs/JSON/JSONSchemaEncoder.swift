@@ -4,11 +4,11 @@ import Foundation
 import OmniTreeSchema
 
 public final class JSONSchemaEncoder: SchemaEncoder {
-  private let wireFormatEncoder: JsonWireFormatEncoder
+  private let wireFormatEncoder: JSONWireFormatEncoder
   private let encodingVisitor: SchemaEncodingVisitor
 
   public init(output: OutputStream, prettyPrint: Bool = false, indentSizeInSpaces: Int = 2) {
-    wireFormatEncoder = JsonWireFormatEncoder(output: output, prettyPrint: prettyPrint, indentSizeInSpaces: indentSizeInSpaces)
+    wireFormatEncoder = JSONWireFormatEncoder(output: output, prettyPrint: prettyPrint, indentSizeInSpaces: indentSizeInSpaces)
     encodingVisitor = SchemaEncodingVisitor(wireFormatEncoder: wireFormatEncoder)
   }
 

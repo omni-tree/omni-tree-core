@@ -4,7 +4,7 @@ import OmniTreeSchema
 import XCTest
 @testable import OmniTreeCodecs
 
-final class JsonWireFormatEncoderTests: XCTestCase {
+final class JSONSchemaEncoderTests: XCTestCase {
   func testPrettyPrintEncoder() {
     let outputMemoryStream = OutputStream.toMemory()
     outputMemoryStream.open()
@@ -25,7 +25,7 @@ final class JsonWireFormatEncoderTests: XCTestCase {
   func addAttachment(encodedSchema: String?) {
     if let encodedSchema = encodedSchema {
       let attachment = XCTAttachment(string: encodedSchema)
-      attachment.name = "JsonWireFormatEncoder output"
+      attachment.name = "JSONSchemaEncoder output"
       attachment.lifetime = .keepAlways
       add(attachment)
     }

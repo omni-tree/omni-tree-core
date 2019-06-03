@@ -7,7 +7,7 @@ private enum NestingState {
   case listStart, listElement
 }
 
-public class JsonWireFormatEncoder: WireFormatEncoder {
+public class JSONWireFormatEncoder: WireFormatEncoder {
   private let output: OutputStream
   private let prettyPrint: PrettyPrintHelper
   private let nesting = Stack<NestingState>()
