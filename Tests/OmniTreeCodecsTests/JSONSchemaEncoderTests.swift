@@ -23,6 +23,12 @@ final class JSONSchemaEncoderTests: XCTestCase {
   }
 
   func addAttachment(encodedSchema: String?) {
+    // Activities and attachments currently don't work with `swift test`.
+    // Using workaround suggested in https://bugs.swift.org/browse/SR-9526
+    if !ProcessInfo.processInfo.environment.keys.contains("__XCODE_BUILT_PRODUCTS_DIR_PATHS") {
+      return
+    }
+
     if let encodedSchema = encodedSchema {
       let attachment = XCTAttachment(string: encodedSchema)
       attachment.name = "JSONSchemaEncoder output"
