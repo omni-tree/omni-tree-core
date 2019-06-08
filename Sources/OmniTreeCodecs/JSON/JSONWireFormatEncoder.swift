@@ -19,24 +19,24 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
 
   private func encodeNameValue(name: String?, value: String) {
     switch nesting.peek() {
-    case .some(.objectStart):
+    case .objectStart:
       output.write(prettyPrint.endOfLine)
       prettyPrint.indent()
       output.write(prettyPrint.currentIndent)
       assert(name != nil)
       output.write("\"\(name ?? "")\": \(value)")
-    case .some(.objectElement):
+    case .objectElement:
       output.write(",")
       output.write(prettyPrint.endOfLine)
       output.write(prettyPrint.currentIndent)
       assert(name != nil)
       output.write("\"\(name ?? "")\": \(value)")
-    case .some(.listStart):
+    case .listStart:
       output.write(prettyPrint.endOfLine)
       prettyPrint.indent()
       output.write(prettyPrint.currentIndent)
       output.write(value)
-    case .some(.listElement):
+    case .listElement:
       output.write(",")
       output.write(prettyPrint.endOfLine)
       output.write(prettyPrint.currentIndent)
@@ -49,13 +49,13 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
 
   private func elementEncoded() {
     switch nesting.peek() {
-    case .some(.objectStart):
+    case .objectStart:
       nesting.push(.objectElement)
-    case .some(.objectElement):
+    case .objectElement:
       break
-    case .some(.listStart):
+    case .listStart:
       nesting.push(.listElement)
-    case .some(.listElement):
+    case .listElement:
       break
     case .none:
       break
@@ -71,11 +71,11 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
 
   public func encodeObjectEnd() {
     switch nesting.peek() {
-    case .some(.objectStart):
+    case .objectStart:
       output.write("}")
       nesting.pop()
       elementEncoded()
-    case .some(.objectElement):
+    case .objectElement:
       output.write(prettyPrint.endOfLine)
       prettyPrint.unindent()
       output.write(prettyPrint.currentIndent)
@@ -84,9 +84,9 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
       assert(nesting.peek() == .objectStart)
       nesting.pop() // remove objectStart
       elementEncoded()
-    case .some(.listStart):
+    case .listStart:
       assertionFailure("End of JSON object instead of end of JSON list")
-    case .some(.listElement):
+    case .listElement:
       assertionFailure("End of JSON object instead of end of JSON list")
     case .none:
       assertionFailure("End of JSON object without start of JSON object")
@@ -100,15 +100,15 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
 
   public func encodeListEnd() {
     switch nesting.peek() {
-    case .some(.objectStart):
+    case .objectStart:
       assertionFailure("End of JSON list instead of end of JSON object")
-    case .some(.objectElement):
+    case .objectElement:
       assertionFailure("End of JSON list instead of end of JSON object")
-    case .some(.listStart):
+    case .listStart:
       output.write("]")
       nesting.pop()
       elementEncoded()
-    case .some(.listElement):
+    case .listElement:
       output.write(prettyPrint.endOfLine)
       prettyPrint.unindent()
       output.write(prettyPrint.currentIndent)
