@@ -9,4 +9,6 @@ public protocol WireFormatEncoder {
   func encodeListStart(name: String?)
   func encodeListEnd()
   func encodeStringField(name: String, value: String)
+  func encodeNumericField<T: Numeric>(name: String, value: T)
+  func encodeBooleanField(name: String, value: Bool)
 }

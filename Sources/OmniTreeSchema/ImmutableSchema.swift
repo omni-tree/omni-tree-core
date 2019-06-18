@@ -96,12 +96,12 @@ public protocol BooleanSchema: PrimitiveSchema {}
 public protocol NumericSchema: PrimitiveSchema {
   associatedtype T: NumericConstraints
 
-  var constraints: T { get }
+  var constraints: T? { get }
 }
 
 /// Schema for string primitive.
 public protocol StringSchema: PrimitiveSchema {
-  var constraints: StringConstraints { get }
+  var constraints: StringConstraints? { get }
 }
 
 /// Schema for password primitive that can be encrypted but not decrypted
@@ -129,8 +129,8 @@ public protocol Multiplicity {
 /// Constraints for numeric fields.
 public protocol NumericConstraints {
   associatedtype T: NumericBound
-  var minValue: T? { get }
-  var maxValue: T? { get }
+  var minBound: T? { get }
+  var maxBound: T? { get }
 }
 
 /// An inclusive/exclusive bound for a numeric field.
@@ -144,5 +144,5 @@ public protocol NumericBound {
 public protocol StringConstraints {
   var minLength: Int? { get }
   var maxLength: Int? { get }
-  var regexPattern: String? { get }
+  var regex: String? { get }
 }

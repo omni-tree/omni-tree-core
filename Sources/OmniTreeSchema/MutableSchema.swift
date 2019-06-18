@@ -305,13 +305,13 @@ public class MutableBooleanSchema: MutablePrimitiveSchema, BooleanSchema {
 
 public class MutableNumericSchema<T: Numeric>: MutablePrimitiveSchema, NumericSchema {
   // TODO: does MutableNumericConstraints<T> leak when this is accessed as NumericSchema?
-  public var constraints: MutableNumericConstraints<T> = MutableNumericConstraints<T>()
+  public var constraints: MutableNumericConstraints<T>? = nil
 
   public override init() {
     super.init()
   }
 
-  public init(constraints: MutableNumericConstraints<T>) {
+  public init(constraints: MutableNumericConstraints<T>?) {
     self.constraints = constraints
   }
 
@@ -321,17 +321,17 @@ public class MutableNumericSchema<T: Numeric>: MutablePrimitiveSchema, NumericSc
 }
 
 public class MutableStringSchema: MutablePrimitiveSchema, StringSchema {
-  public var constraints: StringConstraints {
+  public var constraints: StringConstraints? {
     return mutableConstraints
   }
 
-  public var mutableConstraints: MutableStringConstraints = MutableStringConstraints()
+  public var mutableConstraints: MutableStringConstraints? = nil
 
   public override init() {
     super.init()
   }
 
-  public init(constraints: MutableStringConstraints) {
+  public init(constraints: MutableStringConstraints?) {
     mutableConstraints = constraints
   }
 
@@ -380,14 +380,14 @@ public class MutableMultiplicity: Multiplicity {
 }
 
 public class MutableNumericConstraints<T: Numeric>: NumericConstraints {
-  public var minValue: MutableNumericBound<T>?
-  public var maxValue: MutableNumericBound<T>?
+  public var minBound: MutableNumericBound<T>?
+  public var maxBound: MutableNumericBound<T>?
 
   public init() {}
 
-  public init(minValue: MutableNumericBound<T>? = nil, maxValue: MutableNumericBound<T>? = nil) {
-    self.minValue = minValue
-    self.maxValue = maxValue
+  public init(minBound: MutableNumericBound<T>? = nil, maxBound: MutableNumericBound<T>? = nil) {
+    self.minBound = minBound
+    self.maxBound = maxBound
   }
 }
 
@@ -406,13 +406,13 @@ public class MutableNumericBound<T: Numeric>: NumericBound {
 public class MutableStringConstraints: StringConstraints {
   public var minLength: Int?
   public var maxLength: Int?
-  public var regexPattern: String?
+  public var regex: String?
 
   public init() {}
 
-  public init(minLength: Int? = nil, maxLength: Int? = nil, regexPattern: String? = nil) {
+  public init(minLength: Int? = nil, maxLength: Int? = nil, regex: String? = nil) {
     self.minLength = minLength
     self.maxLength = maxLength
-    self.regexPattern = regexPattern
+    self.regex = regex
   }
 }

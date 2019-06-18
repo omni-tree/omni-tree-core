@@ -126,4 +126,14 @@ public class JSONWireFormatEncoder: WireFormatEncoder {
     encodeNameValue(name: name, value: "\"\(value)\"")
     elementEncoded()
   }
+
+  public func encodeNumericField<T>(name: String, value: T) where T : Numeric {
+    encodeNameValue(name: name, value: String(describing: value))
+    elementEncoded()
+  }
+
+  public func encodeBooleanField(name: String, value: Bool) {
+    encodeNameValue(name: name, value: value ? "true" : "false")
+    elementEncoded()
+  }
 }
